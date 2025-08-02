@@ -5,7 +5,7 @@ let products;
         // Удалите статические данные и добавьте функцию загрузки
 async function loadProductsAndCategories() {
     try {
-        const response = await fetch('api/products.php');
+        const response = await fetch('https://pililshop.rf.gd/api/products.php');
         if (!response.ok) throw new Error('Network response was not ok');
         
         const data = await response.json();
@@ -220,6 +220,7 @@ async function loadProductsAndCategories() {
                                     <div class="product-info">
                                         <h3 class="product-title">${product.name}</h3>
                                         <div class="product-price">${product.price.toLocaleString()} ₽</div>
+                                         <button class="add-to-cart" onclick="addToCart(${product.id})">В корзину</button>
                                         <button class="btn" style="width:100%; margin-top:10px;" onclick="navigate('product', null, ${product.id})">Подробнее</button>
                                     </div>
                                 </div>
@@ -230,7 +231,6 @@ async function loadProductsAndCategories() {
                     
                 case 'product':
                     const product = getProductById(productId);
-                    const categoryName = "eblast"
                     const img2 = (product.image2 === null || product.image2 === undefined) ? 'null.png' : product.image2;
                     const img3 = (product.image3 === null || product.image3 === undefined) ? 'null.png' : product.image3;
                     console.log(product)
@@ -267,7 +267,7 @@ async function loadProductsAndCategories() {
                                         <input type="number" value="1" min="1" id="product-quantity">
                                         <button onclick="changeProductQuantity(1)">+</button>
                                     </div>
-                                    
+                                    <button class="btn" onclick="addProductToCart(${productId})">Добавить в корзину</button>
                                 </div>
                             </div>
                         </div>
